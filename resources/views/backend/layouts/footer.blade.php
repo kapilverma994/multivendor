@@ -9,6 +9,7 @@
   <!-- Page level plugins -->
   <script src="{{asset('backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script>
     $(document).ready(function() {
