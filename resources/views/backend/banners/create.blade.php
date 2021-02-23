@@ -3,11 +3,22 @@
 <div class="col-lg-8 ">
     <!-- Form Basic -->
     <div class="card mb-4">
+      @include('backend.layouts.notify')
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      
         <h6 class="m-0 font-weight-bold text-primary">Add Banner</h6>
       </div>
+      @if($errors->any() )
+      <ul>
+        @foreach($errors->all() as $error)
+      <li class="text-danger">{{$error}}</li>
+        @endforeach
+      </ul>
+
+
+      @endif
       <div class="card-body">
-        <form action="{{'banners.store'}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('banners.store')}}" method="post" enctype="multipart/form-data">
             @csrf
           <div class="form-group">
          <label for="">Title</label>
@@ -25,7 +36,7 @@
                     <i class="fa fa-picture-o"></i> Choose
                   </a>
                 </span>
-                <input id="thumbnail" class="form-control" type="text" name="filepath">
+                <input id="thumbnail" class="form-control" type="text" name="photo">
               </div>
               <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           </div>
@@ -33,7 +44,7 @@
           <div class="form-group">
 
 
-            <select name="conditon" class="form-control" id="">
+            <select name="condition" class="form-control" id="">
                 <option value="">Condition</option>
                 <option value="banner" {{old('condition')=='banner'?'selected':''}}>Banner</option>
                 <option value="promo"  {{old('condition')=='promo'?'selected':''}} >Promote</option>

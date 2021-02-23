@@ -22,4 +22,11 @@
       $('#dataTableHover').DataTable(); // ID From dataTable with Hover
     });
   </script>
+  <script>
+setTimeout(function()
+{
+   $("#alert").slideUp();
+    }, 2000);
+
+  </script>
   @yield('scripts')
