@@ -24,8 +24,8 @@
       <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Banner Managment</h6>
-          <a class="collapse-item" href="#">All Banner</a>
-          <a class="collapse-item" href="#">Add Banner</a>
+          <a class="collapse-item" href="{{route('banners.index')}}">All Banner</a>
+          <a class="collapse-item" href="{{route('banners.create')}}">Add Banner</a>
 
         </div>
       </div>
