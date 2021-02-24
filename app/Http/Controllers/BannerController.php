@@ -132,7 +132,7 @@ return redirect()->route('banners.index')->with('success','Banner Updated Succes
     public function destroy($id)
     {
       $banner=Banner::find($id);
-      dd($banner);
-
+      $banner->delete();
+      return redirect()->route('banners.index')->with('success','Banner deleted successfully');
     }
 }

@@ -57,7 +57,7 @@
               <td>
                 <a href="{{route('banners.edit',$row->id)}}" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-edit"></i>
                 </a>
-                <form action="{{route('banners.destroy',$row->id)}}" method="post" style="    display: inline-block;">
+                <form action="{{route('banners.destroy',$row->id)}}" method="post" onsubmit="return confirm('Are you sure ?')" style="    display: inline-block;">
                   @csrf 
                   @method('delete')
                   <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt"></i>  </button>
