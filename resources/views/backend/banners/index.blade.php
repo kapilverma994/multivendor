@@ -8,7 +8,7 @@
   @include('backend.layouts.notify')
     <div class="card mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">All Banners</h6>
+        <h6 class="m-0 font-weight-bold text-primary">All Banners ({{\App\Models\Banner::count()}})</h6>
       </div>
       <div class="table-responsive p-3">
         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
@@ -55,9 +55,9 @@
               </td>
             
               <td>
-                <a href="{{route('banners.edit',$row->id)}}" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-edit"></i>
+                <a href="{{route('banners.edit',$row->id)}}" class="btn btn-warning btn-sm float-left" title="Edit"><i class="fas fa-edit"></i>
                 </a>
-                <form action="{{route('banners.destroy',$row->id)}}" method="post" onsubmit="return confirm('Are you sure ?')" style="    display: inline-block;">
+                <form action="{{route('banners.destroy',$row->id)}}" class="float-left ml-1" method="post" onsubmit="return confirm('Are you sure ?')" >
                   @csrf 
                   @method('delete')
                   <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt"></i>  </button>
