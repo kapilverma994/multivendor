@@ -30,6 +30,20 @@ class BannerController extends Controller
       return view('backend.banners.create');
     }
 
+     public function status(Request $request){
+      $banner=Banner::find($request->id);
+   if($request->mode=='true'){
+       $banner->status='active';
+       $banner->save();
+       return response()->json(['msg'=>'Banner Active Successfully','status'=>'true']);
+   }else{
+       $banner->status='inactive';
+          $banner->save();
+          return response()->json(['msg'=>'Banner Inactive Successfully','status'=>'true']);
+   }
+ 
+     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -77,7 +91,8 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner=Banner::find($id);
+        return view('backend.banners.edit',compact('banner'));
     }
 
     /**
@@ -89,7 +104,23 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    $banner=Banner::find($id);
+        $this->validate($request,[
+            'title'=>'string|required',
+         
+            'description'=>'string|nullable',
+            'photo'=>'required',
+            'condition'=>'nullable|in:banner,promo',
+   'status'=>'nullable|in:active,inactive'
+           ]);
+           $data=$request->all();
+           $data['slug']=Str::of($request->title)->slug('-');
+           $status=$banner->fill($data)->save();
+if($status){
+return redirect()->route('banners.index')->with('success','Banner Updated Successfully');
+}else{
+    return redirect()->back()->with('success','Something went wrong!!');
+}
     }
 
     /**
@@ -100,6 +131,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $banner=Banner::find($id);
+      dd($banner);
+
     }
 }

@@ -45,7 +45,7 @@
 
 
             <select name="condition" class="form-control" id="">
-                <option value="">Condition</option>
+                <option value="">--Condition--</option>
                 <option value="banner" {{old('condition')=='banner'?'selected':''}}>Banner</option>
                 <option value="promo"  {{old('condition')=='promo'?'selected':''}} >Promote</option>
             </select>

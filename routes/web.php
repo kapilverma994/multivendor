@@ -28,5 +28,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 Route::get('/',[AdminController::class,'admin'])->name('admin');
 //Banner Section
 Route::resource('banners', BannerController::class);
+Route::post('bannner/status',[BannerController::class,'status'])->name('banner.status');
 
 });

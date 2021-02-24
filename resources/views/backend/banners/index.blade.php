@@ -57,7 +57,11 @@
               <td>
                 <a href="{{route('banners.edit',$row->id)}}" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-edit"></i>
                 </a>
-                <a href="" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt"></i>  </a>
+                <form action="{{route('banners.destroy',$row->id)}}" method="post" style="    display: inline-block;">
+                  @csrf 
+                  @method('delete')
+                  <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt"></i>  </button>
+                </form>
               </td>
              
             </tr>
@@ -76,7 +80,7 @@
     var mode=$(this).prop('checked');
     var id=$(this).val();
     $.ajax({
-      url:"",
+      url:"{{route('banner.status')}}",
       type:"post",
       data:{
         _token:'{{csrf_token()}}',
@@ -85,7 +89,7 @@
 
       },
       success:function(data){
-        console.log(data.status)
+        alert(data.msg);
       }
     })
     
