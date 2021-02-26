@@ -39,8 +39,8 @@
       <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Categories</h6>
-          <a class="collapse-item" href="form_basics.html">Form Basics</a>
-          <a class="collapse-item" href="form_advanceds.html">Form Advanceds</a>
+          <a class="collapse-item" href="{{route('category.index')}}">All Category</a>
+          <a class="collapse-item" href="{{route('category.create')}}">Add Category</a>
         </div>
       </div>
     </li>
