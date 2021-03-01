@@ -38,15 +38,6 @@
               <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           </div>
 
-          <div class="form-group">
-
-
-            <select name="status" class="form-control" id="">
-                <option value="">Status</option>
-                <option value="active" {{$brand->status=='active'?'selected':''}}>Active</option>
-                <option value="inactive"  {{$brand->status=='inactive'?'selected':''}} >Inactive</option>
-            </select>
-          </div>
 
          
           <button type="submit" class="btn btn-primary">Update</button>

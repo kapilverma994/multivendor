@@ -99,7 +99,7 @@ class BrandController extends Controller
         $data['slug']=Str::of($request->title)->slug('-');
         $data=$request->all();
      
-        $status=$brand->fill($data);
+        $status=$brand->fill($data)->save();
         if($status){
            return redirect()->route('brand.index')->with('success','Brand Updated Successfully');
                  }else{
@@ -108,14 +108,40 @@ class BrandController extends Controller
     
     }
 
+
+    public function status(Request $request){
+        $brand=Brand::find($request->id);
+     if($request->mode=='true'){
+         $brand->status='active';
+         $brand->save();
+         return response()->json(['msg'=>'Brand Active Successfully','status'=>'true']);
+     }else{
+         $brand->status='inactive';
+            $brand->save();
+            return response()->json(['msg'=>'Brand Inactive Successfully','status'=>'true']);
+     }
+   
+       }
+
+
+
+
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        //
+        $brand=Brand::find($id);
+        $status=$brand->delete();
+        if($status){
+            return redirect()->route('brand.index')->with('success','Brand Deleted Successfully');
+                  }else{
+                      return back()->with('error','something went wrong!');
+                  }
+
     }
 }

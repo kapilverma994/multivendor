@@ -71,7 +71,7 @@
     var mode=$(this).prop('checked');
     var id=$(this).val();
     $.ajax({
-      url:"{{route('banner.status')}}",
+      url:"{{route('brand.status')}}",
       type:"post",
       data:{
         _token:'{{csrf_token()}}',

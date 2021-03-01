@@ -38,5 +38,7 @@ Route::resource('category', CategoryController::class);
 Route::post('category/status',[CategoryController::class,'status'])->name('category.status');
 
 //Brand section
+
 Route::resource('brand', BrandController::class);
+Route::post('brand/status',[BrandController::class,'status'])->name('brand.status');
 });
