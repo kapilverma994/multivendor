@@ -113,6 +113,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
     $Category=Category::find($id);
+    // dd($request->all());
         $this->validate($request,[
             'title'=>'string|required',
             'description'=>'string|nullable',
@@ -123,9 +124,11 @@ class CategoryController extends Controller
            ]);
            $data=$request->all();
            $data['slug']=Str::of($request->title)->slug('-');
-           $data['is_parent']=$request->input('parent_id',0);
+          if($request->is_parent==1){
+              $data['parent_id']=null;
+          }
            $data['parent_id']=$request->parent_cat_id;
-        
+     
            $status=$Category->fill($data)->save();
 if($status){
 return redirect()->route('category.index')->with('success','Category Updated Successfully');
