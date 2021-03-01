@@ -9,6 +9,7 @@
     <div class="card mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">All brand ({{\App\Models\Brand::count()}})</h6>
+        <a href="{{route('brand.create')}}" class="btn btn-warning">Add Brand</a>
       </div>
       <div class="table-responsive p-3">
         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
