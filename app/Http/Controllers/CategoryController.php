@@ -26,8 +26,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     {
-      return view('backend.category.create');
+        $category=Category::where('is_parent',1)->latest()->get();
+      return view('backend.category.create',compact('category'));
     }
 
      public function status(Request $request){
@@ -52,20 +54,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+    
         $this->validate($request,[
          'title'=>'string|required',
       
          'description'=>'string|nullable',
          'photo'=>'required',
-         'condition'=>'nullable|in:Category,promo',
+       'parent_id'=>'sometimes|in:1',
+ 'parent_cat_id'=>'nullable',
 'status'=>'nullable|in:active,inactive'
         ]);
 
        $data=$request->all();
        $data['slug']=Str::of($request->title)->slug('-');
+       $data['is_parent']=$request->input('parent_id',0);
+       $data['parent_id']=$request->parent_cat_id;
+ 
        $status=Category::create($data);
        if($status){
- return redirect()->route('Categorys.index')->with('success','Category Added Successfully');
+ return redirect()->route('category.index')->with('success','Category Added Successfully');
        }else{
            return back()->with('error','something went wrong!');
        }
@@ -91,8 +98,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $Category=Category::find($id);
-        return view('backend.Categorys.edit',compact('Category'));
+        $cats=Category::where('is_parent',1)->latest()->get();
+        $category=Category::find($id);
+        return view('backend.Category.edit',compact('category','cats'));
     }
 
     /**
@@ -107,14 +115,17 @@ class CategoryController extends Controller
     $Category=Category::find($id);
         $this->validate($request,[
             'title'=>'string|required',
-         
             'description'=>'string|nullable',
             'photo'=>'required',
-            'condition'=>'nullable|in:Category,promo',
+          'parent_id'=>'sometimes|in:1',
+    'parent_cat_id'=>'nullable',
    'status'=>'nullable|in:active,inactive'
            ]);
            $data=$request->all();
            $data['slug']=Str::of($request->title)->slug('-');
+           $data['is_parent']=$request->input('parent_id',0);
+           $data['parent_id']=$request->parent_cat_id;
+        
            $status=$Category->fill($data)->save();
 if($status){
 return redirect()->route('category.index')->with('success','Category Updated Successfully');
