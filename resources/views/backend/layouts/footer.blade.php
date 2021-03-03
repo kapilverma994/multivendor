@@ -11,9 +11,14 @@
   <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  {{-- <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script> --}}
+  {{-- {!! Toastr::message() !!} --}}
   <script>
     $(document).ready(function() {
   $('#summernote').summernote();
+});
+$(document).ready(function() {
+  $('#summernote1').summernote();
 });
   </script>
   <!-- Page level custom scripts -->

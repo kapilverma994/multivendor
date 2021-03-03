@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,9 @@ Route::post('category/status',[CategoryController::class,'status'])->name('categ
 
 Route::resource('brand', BrandController::class);
 Route::post('brand/status',[BrandController::class,'status'])->name('brand.status');
+
+//Product Section
+Route::resource('product', ProductController::class);
+Route::post('product/status',[ProductController::class,'status'])->name('product.status');
+
 });

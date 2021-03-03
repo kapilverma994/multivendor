@@ -14,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product=Product::latest()->get();
+        return view('backend.product.index',compact('product'));
     }
 
     /**
@@ -24,8 +25,21 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.product.create');
     }
+    public function status(Request $request){
+        $product=Product::find($request->id);
+     if($request->mode=='true'){
+         $product->status='active';
+         $product->save();
+         return response()->json(['msg'=>'Product Active Successfully','status'=>'true']);
+     }else{
+         $product->status='inactive';
+            $product->save();
+            return response()->json(['msg'=>'Product Inactive Successfully','status'=>'true']);
+     }
+   
+       }
 
     /**
      * Store a newly created resource in storage.
