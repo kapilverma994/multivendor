@@ -45,6 +45,22 @@ class CategoryController extends Controller
    }
  
      }
+     public function getChild(Request $request){
+        $cat=Category::find($request->cat_id);
+        if($cat){
+            $child_id=Category::getChild($request->cat_id);
+            if(count($child_id)<=0){
+                return response()->json(['status'=>false,'data'=>Null,'msg'=>'No child category found']);
+            }else{
+                return response()->json(['status'=>true,'data'=>$child_id,'msg'=>'data found']);
+            }
+        }else{
+            return response()->json(['status'=>false,'data'=>null,'msg'=>'category not  found']);
+        }
+     
+      
+      
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -62,7 +78,7 @@ class CategoryController extends Controller
          'photo'=>'required',
        'parent_id'=>'sometimes|in:1',
  'parent_cat_id'=>'nullable',
-'status'=>'nullable|in:active,inactive'
+'status'=>'required|in:active,inactive'
         ]);
 
        $data=$request->all();

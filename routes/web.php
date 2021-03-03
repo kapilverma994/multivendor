@@ -37,6 +37,7 @@ Route::post('bannner/status',[BannerController::class,'status'])->name('banner.s
 //category section
 Route::resource('category', CategoryController::class);
 Route::post('category/status',[CategoryController::class,'status'])->name('category.status');
+Route::post('category/child',[CategoryController::class,'getChild'])->name('category.child');
 
 //Brand section
 

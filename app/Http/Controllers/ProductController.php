@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     /**
@@ -25,7 +27,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('backend.product.create');
+        $brand=Brand::latest()->get();
+        $cats=Category::where('is_parent',1)->latest()->get();
+        return view('backend.product.create',compact('brand','cats'));
     }
     public function status(Request $request){
         $product=Product::find($request->id);
@@ -49,7 +53,35 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request,[
+          'title'=>'required',
+          'description'=>'required',
+               'ldescription'=>'required',
+               'stock'=>'required|numeric',
+               'photo'=>'required',
+               'price'=>'required|numeric',
+               'sprice'=>'required|numeric',
+               'dprice'=>'nullable|numeric',
+               'size'=>'required',
+               'brand_id'=>'required',
+               'category_id'=>'required|exists:categories,id',
+               'childcat'=>'nullable|exists:categories,id',
+               'condition'=>'required',
+               'vendor'=>'required',
+               'status'=>'required|in:active,inactive',
+
+      ]);
+      $data=$request->all();
+      $data['slug']=Str::of($request->title)->slug('-');
+      $data['summary']=$request->description;
+      $data['description']=$request->ldescription;
+      $data['offer_price']=$request->price-($request->price*$request->discount)/100;
+      $status=Product::create($data);
+      if($status){
+return redirect()->route('product.index')->with('success','Product Added Successfully');
+      }else{
+          return back()->with('error','something went wrong!');
+      }
     }
 
     /**

@@ -40,11 +40,7 @@
             <input type="number" class="form-control" name="stock" placeholder="Enter Stock Quantity" required>
 
           </div>
-          <div class="form-group">
-            <label for="">Price</label>
-            <input type="text" name="price" class="form-control" required>
-
-          </div>
+         
           <div class="form-group">
             <div class="input-group">
                 <span class="input-group-btn">
@@ -56,7 +52,57 @@
               </div>
               <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           </div>
+          <div class="form-group">
+            <label for="">Price</label>
+            <input type="number" step="any" name="price" class="form-control" value="{{old('price')}}"  required>
 
+          </div>
+          <div class="form-group">
+            <label for="">Sale Price</label>
+            <input type="number" step="any" name="sprice" class="form-control" value="{{old('sprice')}}"  required>
+
+          </div>
+          <div class="form-group">
+            <label for="">Discount </label>
+            <input type="number" name="dprice" step="any" class="form-control" value="{{old('dprice')}}" required>
+
+          </div>
+          <div class="form-group">
+            <label for="">Size</label>
+            <input class="form-control" type="text"  name="size" id="size" data-role="tagsinput" > 
+          
+          </div>
+          <div class="form-group">
+
+
+            <select name="brand_id" class="form-control" id="">
+                <option value="">Choose Brand</option>
+               @foreach($brand as $br)
+<option value="{{$br->id}}" {{old('brand')}}>{{$br->title}}</option>
+               @endforeach
+          
+            </select>
+          </div>
+          <div class="form-group">
+
+
+            <select name="category_id" class="form-control" id="cat_id">
+                <option value="">Choose Catgory</option>
+               @foreach($cats as $cat)
+<option value="{{$cat->id}}" {{old('cat')}}>{{$cat->title}}</option>
+               @endforeach
+          
+            </select>
+          </div>
+          <div class="form-group d-none" id="child_cat_div">
+
+
+            <select name="childcat" class="form-control " id="child_cat_id">
+   
+      
+          
+            </select>
+          </div>
           <div class="form-group">
 
 
@@ -67,10 +113,16 @@
                 <option value="popular"  {{old('condition')=='popular'?'selected':''}} >Popular</option>
             </select>
           </div>
-<div class="form-group">
-  <input class="form-control" type="text"  name="size" id="size" data-role="tagsinput" > 
+          <div class="form-group">
+            <select name="vendor" class="form-control" id="" required>
+              <option value="">Choose Vendor</option>
+@foreach(\App\Models\User::where('role','vendor')->get() as $vendor)
+<option value="{{$vendor->id}}">{{$vendor->full_name}}</option>
+@endforeach
+            </select>
 
-</div>
+          </div>
+
           <div class="form-group">
 
 
@@ -90,6 +142,37 @@
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 <script>
 $('#lfm').filemanager('image');
+</script>
+<script>
+  $('#cat_id').change(function(){
+    var cat_id=$(this).val();
+    if(cat_id!=null){
+      $.ajax({
+url:"{{route('category.child')}}",
+type:"post",
+data:{
+  _token:"{{csrf_token()}}",
+  cat_id:cat_id,
+
+},
+success:function(data){
+if(data.status){
+  var html_option="<option value=''>--Child Category--</option>";
+  $('#child_cat_div').removeClass('d-none');
+ $.each(data.data,function(id,title){
+html_option+="<option value='"+id+"'>"+title+"</option>";
+ });
+
+
+}else{
+  $('#child_cat_div').addClass('d-none');
+}
+$('#child_cat_id').html(html_option);
+}
+      });
+    }
+ 
+  })
 </script>
 
 @endsection
