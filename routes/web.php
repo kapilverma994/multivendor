@@ -5,6 +5,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,8 @@ Route::post('brand/status',[BrandController::class,'status'])->name('brand.statu
 Route::resource('product', ProductController::class);
 Route::post('product/status',[ProductController::class,'status'])->name('product.status');
 
+
+//user section
+Route::resource('user', UserController::class);
+Route::post('user/status',[UserController::class,'status'])->name('user.status');
 });
