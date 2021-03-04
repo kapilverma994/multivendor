@@ -76,6 +76,9 @@ class ProductController extends Controller
       $data['summary']=$request->description;
       $data['description']=$request->ldescription;
       $data['offer_price']=$request->price-($request->price*$request->discount)/100;
+      $data['discount']=$request->dprice;
+      $data['vendor_id']=$request->vendor;
+
       $status=Product::create($data);
       if($status){
 return redirect()->route('product.index')->with('success','Product Added Successfully');
@@ -101,9 +104,12 @@ return redirect()->route('product.index')->with('success','Product Added Success
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $product=Product::find($id);
+        $brand=Brand::latest()->get();
+        $cats=Category::where('is_parent',1)->latest()->get();
+        return view('backend.product.edit',compact('product','brand','cats'));
     }
 
     /**
@@ -113,10 +119,43 @@ return redirect()->route('product.index')->with('success','Product Added Success
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request,$id)
     {
-        //
-    }
+        $pro=Product::find($id);
+        $this->validate($request,[
+            'title'=>'required',
+            'description'=>'required',
+                 'ldescription'=>'required',
+                 'stock'=>'required|numeric',
+                 'photo'=>'required',
+                 'price'=>'required|numeric',
+                 'sprice'=>'required|numeric',
+                 'dprice'=>'nullable|numeric',
+                 'size'=>'required',
+                 'brand_id'=>'required',
+                 'category_id'=>'required|exists:categories,id',
+                 'childcat'=>'nullable|exists:categories,id',
+                 'condition'=>'required',
+                 'vendor'=>'required',
+                
+  
+        ]);
+        $data=$request->all();
+        $data['slug']=Str::of($request->title)->slug('-');
+        $data['summary']=$request->description;
+        $data['description']=$request->ldescription;
+        $data['offer_price']=$request->price-($request->price*$request->discount)/100;
+        $data['discount']=$request->dprice;
+        $data['vendor_id']=$request->vendor;
+ 
+        $status=$pro->fill($data)->save();
+        if($status){
+  return redirect()->route('product.index')->with('success','Product Updated Successfully');
+        }else{
+            return back()->with('error','something went wrong!');
+        }
+      }
+    
 
     /**
      * Remove the specified resource from storage.

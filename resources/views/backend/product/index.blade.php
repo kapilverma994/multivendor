@@ -69,9 +69,9 @@
               </td>
             
               <td>
-                <a href="{{route('category.edit',$row->id)}}" class="btn btn-warning btn-sm float-left" title="Edit"><i class="fas fa-edit"></i>
+                <a href="{{route('product.edit',$row->id)}}" class="btn btn-warning btn-sm float-left" title="Edit"><i class="fas fa-edit"></i>
                 </a>
-                <form action="{{route('category.destroy',$row->id)}}" class="float-left ml-1" method="post" onsubmit="return confirm('Are you sure ?')" >
+                <form action="{{route('product.destroy',$row->id)}}" class="float-left ml-1" method="post" onsubmit="return confirm('Are you sure ?')" >
                   @csrf 
                   @method('delete')
                   <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt"></i>  </button>
