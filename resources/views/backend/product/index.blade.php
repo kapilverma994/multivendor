@@ -39,9 +39,12 @@
           </tfoot> --}}
           <tbody>
             @foreach($product as $key=>$row)
+            @php 
+$photo=explode(',',$row->photo)
+            @endphp
             <tr>
              <td>{{$loop->iteration}}</td>
-              <td><img src="{{$row->photo}}" alt="" height="80px" width="80px" alt="banner image"></td>
+              <td><img src="{{$photo[0]}}" alt="" height="80px" width="80px" alt="banner image"></td>
               <td> {{$row->title}}</td>
              
               <td>

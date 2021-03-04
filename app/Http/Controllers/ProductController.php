@@ -163,8 +163,15 @@ return redirect()->route('product.index')->with('success','Product Added Success
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $pro=Product::find($id);
+        $status=$pro->delete();
+        if($status){
+            return redirect()->route('product.index')->with('success','Product deleted Successfully');
+                  }else{
+                      return back()->with('error','something went wrong!');
+                  }
+
     }
 }
