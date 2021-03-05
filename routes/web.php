@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+//Frontend Section
+
+Route::get("/",[App\Http\Controllers\Frontend\IndexController::class, 'home'])->name('home');
+
+//Endfrontened
+
 
 Auth::routes(['register'=>false]);
 

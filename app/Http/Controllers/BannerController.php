@@ -107,7 +107,7 @@ class BannerController extends Controller
     $banner=Banner::find($id);
         $this->validate($request,[
             'title'=>'string|required',
-         
+    'slug'=>'required|exists:banners,slug',
             'description'=>'string|nullable',
             'photo'=>'required',
             'condition'=>'nullable|in:banner,promo',
